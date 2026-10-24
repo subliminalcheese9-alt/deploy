@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notes</title>
+    <style>
+	    body { }
+		h1 { }
+		.note { }
+		.done { }
+		.pending { }
+	</style>
+</head>
+<body>
+    <h1>Notes</h1>
+	
+	<form method='POST'>
+	    {% csrf_token %}
+	    <span>{{ note.text }}</span>
+		<input placeholder='Enter...' name='text' type='text' required>
+		<button type='submit'>Add</button>
+	</form>
+	
+	{% for note in notes %}
+		    <div class='note'>
+		        <span>{{ note.text }}</span>
+				{% if note.done %}
+		            <span class='done'>Done</span> 
+			    {% else %}
+					<span class='pending'>Not Done</span>
+				{% endif %}
+				<a href='{% url 'toggle_note' note.id %}'>Toggle</a>
+				<a href='{% url 'delete_note' note.id %}'>Delete</a>
+		    </div>
+	{% endfor %}
+		    
+	</form>
+</body>
+</html>
